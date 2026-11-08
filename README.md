@@ -1,185 +1,258 @@
+import pypandoc
+
+readme = r'''<div align="center">
+
 # 🚀 VISIONFORGE X
 
-## Universal Adaptive Edge Vision Intelligence Platform
+### Universal Adaptive Edge Vision Intelligence Platform
 
-> **FPGA-accelerated computer vision · AI inference · Real-time edge intelligence** — unified in one powerful desktop application.
+**See faster. Think smarter. Process at the edge.**
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg?logo=python)
-![PySide6](https://img.shields.io/badge/PySide6-6.6%2B-14Y7V9.svg?logo=qt)
-![OpenCV](https://img.shields.io/badge/OpenCV-4.8%2B-5C3EE8.svg?logo=opencv)
-![Tests](https://img.shields.io/badge/Tests-pytest%20%2B%20pytest--qt-green.svg)
-![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)
+An integrated computer-vision and AI desktop platform combining FPGA acceleration, embedded processing, adaptive intelligence, and real-time visual analytics — built around the **Digilent ZYBO Z7-10 (Xilinx Zynq-7010 SoC)**.
+
+<br/>
+
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
+![PySide6](https://img.shields.io/badge/GUI-PySide6-41CD52?logo=qt&logoColor=white)
+![OpenCV](https://img.shields.io/badge/Vision-OpenCV-5C3EE8?logo=opencv&logoColor=white)
+![FPGA](https://img.shields.io/badge/Hardware-Zynq--7000-orange)
+![License](https://img.shields.io/badge/License-MIT-blue)
+![Platforms](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
+
+<br/>
+
+**[Getting Started](#-quick-start) · [Features](#-platform-capabilities) · [Architecture](#-system-architecture) · [Documentation](#-documentation)**
+
+</div>
 
 ---
 
-VISIONFORGE X is a production-structured software platform built around the **Digilent ZYBO Z7-10** (Xilinx Zynq-7010 SoC). It fuses **FPGA-accelerated image processing**, **ARM-based embedded control**, **adaptive computer vision**, and **AI-driven visual understanding** into a single, cohesive desktop GUI.
+## ⚡ At a Glance
 
-Designed for the modern edge-computing stack, it runs fully in **Simulation Mode** out of the box — and seamlessly switches to **Hardware Mode** when connected to a real ZYBO board over TCP/UDP.
+VISIONFORGE X brings the major building blocks of an edge-vision system into one desktop environment:
+
+| Capability | What it delivers |
+|---|---|
+| **Computer Vision** | 16 image-processing algorithms with configurable parameters and pipeline ordering |
+| **AI Inference** | Model registry and inference workflows, including ONNX Runtime support |
+| **Motion Intelligence** | Motion detection, tracking, optical flow, and heatmap visualization |
+| **FPGA Acceleration** | Verilog IP integration for grayscale processing and Sobel edge detection |
+| **Embedded Control** | ARM-side device management, camera control, and telemetry |
+| **System Analytics** | FPS, latency, throughput, event records, and report generation |
+
+> **Start without hardware.** The application launches in Simulation Mode, allowing you to explore its workflows without a connected FPGA board. Hardware Mode is designed for communication with a ZYBO Z7-10 over TCP/UDP.
 
 ---
 
-## 📸 Platform Overview
+## 🧭 System Architecture
 
-```
+VISIONFORGE X uses a workstation-to-edge-device architecture. The desktop application provides the operator interface and high-level vision/AI workflows, while the Zynq platform separates embedded control from programmable-logic processing.
+
+```text
 ┌─────────────────────────────────────────────────────────────────────┐
-│                        WINDOWS WORKSTATION                            │
+│                         HOST WORKSTATION                             │
+│                                                                     │
 │  ┌───────────────────────────────────────────────────────────────┐  │
-│  │              VISIONFORGE X Desktop Application (PySide6)       │  │
-│  │  ┌──────────┬──────────┬──────────┬────────────────────────┐  │  │
-│  │  │ Command  │  Vision  │    AI    │   Pipeline / FPGA      │  │  │
-│  │  │  Center  │  Studio  │   Lab    │       Monitor          │  │  │
-│  │  └──────────┴──────────┴──────────┴────────────────────────┘  │  │
+│  │              VISIONFORGE X · PySide6 Desktop                  │  │
+│  │                                                               │  │
+│  │   Command Center   Vision Studio   AI Lab   Pipeline Monitor  │  │
+│  │                                                               │  │
+│  │   Analytics   Events   Datasets   Reports   Configuration     │  │
 │  └───────────────────────────────────────────────────────────────┘  │
-│                        ↓ TCP/UDP Protocol                             │
-├─────────────────────────────────────────────────────────────────────┤
-│                        ZYBO Z7-10 BOARD                               │
-│  ┌────────────────────────┐      ┌───────────────────────────────┐  │
-│  │    ARM Cortex-A9       │      │      Programmable Logic        │  │
-│  │  - Device Control      │      │  - Grayscale IP                │  │
-│  │  - Camera Management   │      │  - Sobel Edge Detection        │  │
-│  │  - Telemetry           │      │  - AXI DMA                     │  │
-│  │  - Lightweight AI      │      │  - AXI-Lite Registers          │  │
-│  └────────────────────────┘      └───────────────────────────────┘  │
+│                               │                                     │
+│                         TCP / UDP                                  │
+└───────────────────────────────┼─────────────────────────────────────┘
+                                │
+┌───────────────────────────────▼─────────────────────────────────────┐
+│                         DIGILENT ZYBO Z7-10                         │
+│                         Xilinx Zynq-7010 SoC                         │
+│                                                                     │
+│  ┌────────────────────────────┐  ┌────────────────────────────────┐  │
+│  │     Processing System     │  │       Programmable Logic       │  │
+│  │       ARM Cortex-A9       │  │                                │  │
+│  │                            │  │  Grayscale IP                  │  │
+│  │  Device and camera control│  │  Sobel edge detection          │  │
+│  │  Telemetry                │  │  AXI DMA                        │  │
+│  │  Lightweight AI           │  │  AXI-Lite registers             │  │
+│  └────────────────────────────┘  └────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
----
+### Two operating modes
 
-## ✨ Key Features
-
-### 🖥️ 12-Page Command Suite
-
-| Page | Description |
-|------|-------------|
-| **⚡ Command Center** | Live monitoring, dual camera view, system telemetry, event feed |
-| **🔬 Vision Studio** | 16 real CV algorithms with adjustable parameters and pipeline ordering |
-| **🤖 AI Intelligence Lab** | Model registry, loading, inference, confidence thresholds |
-| **🏃 Motion Intelligence** | Frame differencing, background subtraction, tracking, heatmaps |
-| **⚠️ Anomaly Laboratory** | Anomaly scoring, heatmaps, threshold-based detection |
-| **🔗 Pipeline Architect** | Visual pipeline editor with validation and templates |
-| **🔧 FPGA Monitor** | Resource utilization, live telemetry, AXI status |
-| **📊 Performance Lab** | Real benchmarking with FPS, latency, throughput metrics |
-| **📁 Dataset Explorer** | Dataset import, browsing, class distribution, validation |
-| **📋 Event Intelligence** | Event management, search, filtering, export |
-| **📄 Research Reports** | PDF/CSV/JSON report generation |
-| **⚙️ System Configuration** | Device, camera, AI, storage settings |
-
-### 🧠 Core Capabilities
-
-- **16 Vision Algorithms** — Grayscale, Gaussian/Median/Bilateral blur, CLAHE, Gamma correction, Sharpening, Sobel, Scharr, Canny, Binary/Adaptive/Otsu thresholding, Morphology (erosion/dilation/opening/closing), ROI
-- **Motion Detection** — Frame differencing, background subtraction, centroid tracking, optical flow, Kalman tracking, motion heatmaps, zone-based detection
-- **AI Model Management** — Classification, detection, anomaly detection with ONNX Runtime support
-- **Adaptive Controller** — Rule-based intelligence adjusting parameters based on system state
-- **Pipeline Engine** — Safe, validated processing pipeline with no arbitrary code execution
-- **Database** — SQLite persistence with full schema for telemetry, events, benchmarks, models, datasets
-- **Protocol** — Versioned TCP/UDP communication with handshake, commands, acknowledgements, heartbeat
+| Area | Simulation Mode | Hardware Mode |
+|---|---|---|
+| Setup | Runs without an FPGA board | Requires a ZYBO Z7-10 |
+| Camera input | Synthetic video feed | Real camera through Pcam interface |
+| Vision processing | OpenCV on workstation | FPGA-accelerated and OpenCV hybrid |
+| AI inference | ONNX on workstation | Lightweight ARM runtime |
+| FPGA telemetry | Simulated metrics | LUT, BRAM, and DSP utilization |
+| Communication | No board connection required | TCP/UDP over Ethernet |
 
 ---
 
-## 🛠️ Tech Stack
+## ✨ Platform Capabilities
 
-| Layer | Technology |
-|-------|-----------|
-| **GUI** | Python 3.11+, PySide6, PyQtGraph |
-| **Computer Vision** | OpenCV 4.x, NumPy |
-| **AI/ML** | PyTorch (workstation), ONNX Runtime (inference) |
-| **Database** | SQLite |
-| **Reports** | ReportLab (PDF), CSV/JSON exporters |
-| **FPGA** | Verilog, Vivado 2023.x, AXI4-Stream/Lite |
-| **Embedded** | C/C++, Vitis-compatible structure |
-| **Testing** | pytest, pytest-qt |
-| **Packaging** | PyInstaller |
+### 🖥️ 12-page desktop command suite
+
+| Workspace | Purpose |
+|---|---|
+| ⚡ **Command Center** | Live monitoring, dual-camera view, system telemetry, and event feed |
+| 🔬 **Vision Studio** | 16 computer-vision algorithms with adjustable parameters and pipeline ordering |
+| 🤖 **AI Intelligence Lab** | Model registry, model loading, inference, and confidence thresholds |
+| 🏃 **Motion Intelligence** | Frame differencing, background subtraction, tracking, and heatmaps |
+| ⚠️ **Anomaly Laboratory** | Anomaly scoring, heatmaps, and threshold-based detection |
+| 🔗 **Pipeline Architect** | Visual pipeline editor with validation and templates |
+| 🔧 **FPGA Monitor** | Resource utilization, telemetry, and AXI status |
+| 📊 **Performance Lab** | FPS, latency, and throughput benchmarking |
+| 📁 **Dataset Explorer** | Dataset import, browsing, class distribution, and validation |
+| 📋 **Event Intelligence** | Event management, search, filtering, and export |
+| 📄 **Research Reports** | PDF, CSV, and JSON report generation |
+| ⚙️ **System Configuration** | Device, camera, AI, and storage settings |
+
+### 🔬 Computer-vision toolkit
+
+The platform includes 16 image-processing algorithm groups and operations:
+
+- **Image enhancement:** grayscale conversion, Gaussian blur, median blur, bilateral filtering, CLAHE, gamma correction, and sharpening.
+- **Edge detection:** Sobel, Scharr, and Canny.
+- **Thresholding:** binary, adaptive, and Otsu thresholding.
+- **Morphology:** erosion, dilation, opening, and closing.
+- **Region processing:** region of interest (ROI) operations.
+
+### 🏃 Motion and scene intelligence
+
+- Frame differencing and background subtraction
+- Centroid-based object tracking
+- Optical flow
+- Kalman tracking
+- Motion heatmaps
+- Zone-based motion detection
+
+### 🧠 AI and adaptive processing
+
+- Model registry and model-loading workflows
+- Classification, object-detection, and anomaly-detection workflows
+- ONNX Runtime inference support
+- Confidence-threshold configuration
+- Rule-based adaptive controller for adjusting parameters according to system state
+
+### 🔗 Validated processing pipelines
+
+The pipeline engine supports configurable processing sequences with validation and templates. It is designed to execute approved processing operations rather than arbitrary user-supplied code.
+
+### 📈 Monitoring, persistence, and reporting
+
+- FPS, latency, and throughput measurements
+- Telemetry and event persistence using SQLite
+- Model and dataset records
+- Event search, filtering, and export
+- PDF, CSV, and JSON report generation
 
 ---
 
-## 🏃 Quick Start
+## 🛠️ Technology Stack
 
-### Prerequisites
+| Layer | Technologies |
+|---|---|
+| Desktop application | Python 3.11+, PySide6, PyQtGraph |
+| Computer vision | OpenCV 4.x, NumPy |
+| AI / ML | PyTorch (workstation), ONNX Runtime (inference) |
+| Database | SQLite |
+| Reporting | ReportLab, CSV, JSON |
+| FPGA design | Verilog, Vivado 2023.x, AXI4-Stream, AXI-Lite |
+| Embedded software | C/C++, Vitis-compatible structure |
+| Communication | Versioned TCP/UDP protocol |
+| Testing | pytest, pytest-qt |
+| Packaging | PyInstaller |
 
-- Python 3.11 or higher
-- pip
-- (Optional) Digilent ZYBO Z7-10 board for hardware mode
+---
 
-### Installation
+## 🚀 Quick Start
+
+### Requirements
+
+- Python **3.11 or newer**
+- `pip`
+- Optional: Digilent **ZYBO Z7-10** board for hardware operation
+
+### 1. Clone the repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/VetrivelRavichandiran/VISIONFORGE-X.git
 cd VISIONFORGE-X/desktop_app
+```
 
-# Create a virtual environment (recommended)
+### 2. Create and activate a virtual environment
+
+**Windows**
+```powershell
 python -m venv .venv
-.venv\Scripts\activate    # Windows
-source .venv/bin/activate # Linux/macOS
+.venv\Scripts\activate
+```
 
-# Install dependencies
+**Linux / macOS**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-### Run the Application
+### 4. Launch VISIONFORGE X
 
 ```bash
 python main.py
 ```
 
-> ✅ **Runs immediately in simulation mode — no hardware required.**
+> ✅ **No FPGA board is required to get started.** The application runs in Simulation Mode by default.
 
-### Run the Test Suite
+### 5. Run the tests
+
+From the `desktop_app` directory:
 
 ```bash
-cd desktop_app
 pytest tests/ -v
 ```
 
 ---
 
-## 🔄 Simulation vs Hardware Mode
+## 📁 Repository Layout
 
-| Feature | Simulation Mode | Hardware Mode |
-|---------|----------------|---------------|
-| **Setup** | Zero setup, runs instantly | Requires ZYBO Z7-10 board |
-| **Camera** | Synthetic video feed | Real camera via Pcam interface |
-| **Vision Processing** | Full OpenCV on workstation | FPGA-accelerated + OpenCV hybrid |
-| **AI Inference** | ONNX on workstation | Lightweight ARM runtime |
-| **FPGA Telemetry** | Simulated metrics | Real LUT/BRAM/DSP utilization |
-| **Connectivity** | N/A | TCP/UDP over Ethernet |
-
----
-
-## 📦 Repository Structure
-
-```
+```text
 VISIONFORGE-X/
-├── desktop_app/                 # Main desktop application
-│   ├── main.py                  # Application entry point
-│   ├── requirements.txt         # Python dependencies
+├── desktop_app/
+│   ├── main.py
+│   ├── requirements.txt
 │   ├── config/
-│   │   └── settings.py          # Configuration management
+│   │   └── settings.py
 │   ├── frontend/
-│   │   ├── main_window.py       # Main window with all 12 pages
-│   │   ├── navigation.py        # Sidebar navigation rail
-│   │   ├── design_system/       # Color/typography tokens
-│   │   ├── components/          # Reusable UI components
-│   │   └── pages/               # 12 application pages
+│   │   ├── main_window.py
+│   │   ├── navigation.py
+│   │   ├── design_system/
+│   │   ├── components/
+│   │   └── pages/
 │   ├── backend/
-│   │   ├── vision/              # CV engine, motion analysis
-│   │   ├── ai/                  # Model registry, inference
-│   │   ├── adaptive/            # Adaptive controller
-│   │   ├── pipeline/            # Pipeline engine
-│   │   ├── analytics/           # Benchmarking
-│   │   ├── events/              # Event management
-│   │   ├── storage/             # Database layer
-│   │   └── reports/             # Report generation
-│   ├── adapters/                # Device abstraction
-│   ├── protocol/                # Communication protocol
-│   └── tests/                   # Test suite
-├── embedded/                    # ARM-side services (C/C++)
-├── fpga/                        # Verilog IP cores
-├── documentation/               # Technical documentation
-├── scripts/                     # Build/utility scripts
-├── .github/                     # GitHub templates & workflows
-├── .gitignore
+│   │   ├── vision/
+│   │   ├── ai/
+│   │   ├── adaptive/
+│   │   ├── pipeline/
+│   │   ├── analytics/
+│   │   ├── events/
+│   │   ├── storage/
+│   │   └── reports/
+│   ├── adapters/
+│   ├── protocol/
+│   └── tests/
+├── embedded/              # ARM-side services (C/C++)
+├── fpga/                  # Verilog IP cores
+├── documentation/         # Architecture and engineering guides
+├── scripts/               # Build and utility scripts
+├── .github/               # GitHub templates and workflows
 ├── LICENSE
 ├── README.md
 ├── CONTRIBUTING.md
@@ -192,56 +265,77 @@ VISIONFORGE-X/
 
 ## 📚 Documentation
 
+The `documentation/` directory contains focused engineering guides:
+
 | Document | Description |
-|----------|-------------|
-| [ARCHITECTURE.md](documentation/ARCHITECTURE.md) | System architecture & data flow |
-| [HARDWARE_INTEGRATION.md](documentation/HARDWARE_INTEGRATION.md) | ZYBO board integration guide |
-| [COMMUNICATION_PROTOCOL.md](documentation/COMMUNICATION_PROTOCOL.md) | TCP/UDP protocol specification |
-| [DATABASE_SCHEMA.md](documentation/DATABASE_SCHEMA.md) | SQLite database design |
-| [AI_MODEL_GUIDE.md](documentation/AI_MODEL_GUIDE.md) | AI model integration & ONNX |
-| [FPGA_INTEGRATION.md](documentation/FPGA_INTEGRATION.md) | FPGA IP core guide |
-| [SIMULATION_GUIDE.md](documentation/SIMULATION_GUIDE.md) | Simulation mode details |
-| [TESTING_GUIDE.md](documentation/TESTING_GUIDE.md) | Test framework & coverage |
-| [WINDOWS_BUILD.md](documentation/WINDOWS_BUILD.md) | Windows packaging with PyInstaller |
-| [IMPLEMENTATION_STATUS.md](documentation/IMPLEMENTATION_STATUS.md) | Feature completion status |
-| [TROUBLESHOOTING.md](documentation/TROUBLESHOOTING.md) | Common issues & fixes |
+|---|---|
+| [Architecture](documentation/ARCHITECTURE.md) | System architecture and data flow |
+| [Hardware Integration](documentation/HARDWARE_INTEGRATION.md) | ZYBO board integration |
+| [Communication Protocol](documentation/COMMUNICATION_PROTOCOL.md) | TCP/UDP protocol specification |
+| [Database Schema](documentation/DATABASE_SCHEMA.md) | SQLite database design |
+| [AI Model Guide](documentation/AI_MODEL_GUIDE.md) | Model integration and ONNX workflows |
+| [FPGA Integration](documentation/FPGA_INTEGRATION.md) | FPGA IP core integration |
+| [Simulation Guide](documentation/SIMULATION_GUIDE.md) | Simulation mode details |
+| [Testing Guide](documentation/TESTING_GUIDE.md) | Test framework and execution |
+| [Windows Build](documentation/WINDOWS_BUILD.md) | PyInstaller packaging |
+| [Implementation Status](documentation/IMPLEMENTATION_STATUS.md) | Feature implementation status |
+| [Troubleshooting](documentation/TROUBLESHOOTING.md) | Common issues and fixes |
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Contributions, ideas, and bug reports are welcome.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/your-feature`.
+3. Commit your changes: `git commit -m "Add your feature"`.
+4. Push the branch: `git push origin feature/your-feature`.
+5. Open a Pull Request.
+
+Please review [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes.
 
 ---
 
+## 🔐 Security
+
+For security-related concerns, please follow the reporting guidance in [SECURITY.md](SECURITY.md).
+
 ## 📄 License
 
-This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+VISIONFORGE X is released under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **Digilent** for the ZYBO Z7-10 development board
-- **Xilinx/AMD** for Zynq-7000 SoC architecture
-- **OpenCV** team for computer vision library
-- **PySide6/Qt** for the GUI framework
-- **All contributors** who have helped build VISIONFORGE X
+- **Digilent** — ZYBO Z7-10 development board
+- **AMD Xilinx** — Zynq-7000 SoC architecture and FPGA ecosystem
+- **OpenCV** — Computer-vision library
+- **Qt / PySide6** — Desktop application framework
+- **Contributors** — Everyone helping improve VISIONFORGE X
 
 ---
 
 ## 📬 Contact & Support
 
-- **Issues & Bug Reports** → [GitHub Issues](https://github.com/VetrivelRavichandiran/VISIONFORGE-X/issues)
-- **Feature Requests** → [GitHub Discussions](https://github.com/VetrivelRavichandiran/VISIONFORGE-X/discussions)
-- **Security Concerns** → See [SECURITY.md](SECURITY.md)
+- **Bug reports:** [GitHub Issues](https://github.com/VetrivelRavichandiran/VISIONFORGE-X/issues)
+- **Feature discussions:** [GitHub Discussions](https://github.com/VetrivelRavichandiran/VISIONFORGE-X/discussions)
+- **Security:** See [SECURITY.md](SECURITY.md)
 
 ---
 
-⭐ **If this project helps you, consider giving it a star!**
+<div align="center">
+
+### ⭐ Build at the edge. See beyond the frame.
+
+If VISIONFORGE X is useful to you, consider giving the repository a star.
+
+**VISIONFORGE X** · Adaptive Vision · Edge AI · FPGA Engineering
+
+</div>
+'''
+
+output_path = "/mnt/data/VISIONFORGE_X_README.md"
+pypandoc.convert_text(readme, "md", format="md", outputfile=output_path, extra_args=["--standalone"])
+print(f"Created: {output_path}")
