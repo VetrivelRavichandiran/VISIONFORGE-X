@@ -1,0 +1,44 @@
+{
+  "device": {
+    "mode": "simulation",
+    "board_ip": "192.168.1.100",
+    "tcp_port": 5000,
+    "udp_port": 5001,
+    "comm_timeout": 5.0,
+    "heartbeat_timeout": 10.0,
+    "reconnect_enabled": true,
+    "reconnect_delay": 2.0
+  },
+  "camera": {
+    "preview_resolution": "640x480",
+    "target_fps": 30,
+    "processing_mode": "balanced",
+    "source": "simulation",
+    "source_path": ""
+  },
+  "ai": {
+    "model_path": "",
+    "model_type": "classification",
+    "confidence_threshold": 0.5,
+    "inference_interval": 1,
+    "device": "cpu"
+  },
+  "storage": {
+    "base_path": "./storage",
+    "dataset_path": "./datasets",
+    "log_path": "./logs",
+    "db_path": "./storage/visionforge.db",
+    "data_retention_days": 90
+  },
+  "theme": {
+    "name": "Dark Industrial",
+    "accent_color": "#00E5FF",
+    "warning_color": "#FFB300",
+    "error_color": "#FF1744",
+    "success_color": "#00E676"
+  },
+  "adaptive_enabled": true,
+  "overlays_enabled": true,
+  "last_window_geometry": "",
+  "last_window_state": ""
+}

@@ -1,0 +1,10 @@
+# VISIONFORGE X - Desktop Application Dependencies
+PySide6>=6.6.0
+pyqtgraph>=0.13.3
+opencv-python>=4.8.0
+numpy>=1.24.0
+Pillow>=10.0.0
+pydantic>=2.0.0
+reportlab>=4.0.0
+pytest>=7.4.0
+pytest-qt>=4.2.0
