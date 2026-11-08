@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # VISIONFORGE X
 ## Universal Adaptive Edge Vision Intelligence Platform
 
@@ -229,3 +230,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 - AI model inference in hardware mode requires compatible ARM runtime
 - Full-resolution video processing occurs on the board; desktop receives lower-resolution preview
 - Some benchmark values in simulation mode are synthetic and labeled as SIMULATED
+=======
+# VISIONFORGE-X
+VISIONFORGE X — Universal Adaptive Edge Vision Intelligence Platform.  FPGA-accelerated computer vision + AI inference on a PySide6 desktop GUI.  12-page control suite, 16 CV algorithms, motion tracking, anomaly detection,  real-time benchmarking, and ZYBO Z7-10 hardware integration. Runs in simulation or hardware mode.
+>>>>>>> 77664ce727262919f483468146bfb98b511a5c3e
