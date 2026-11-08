@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "VISIONFORGE X: Universal Adaptive Edge Vision Intelligence Platform"
+authors:
+  - family-names: "Ravichandiran"
+    given-names: "Vetrivel"
+    orcid: "https://orcid.org/"
+version: "1.0.0"
+date-released: "2024-11-08"
+abstract: >-
+  VISIONFORGE X is a production-structured software platform built around the
+  Digilent ZYBO Z7-10 (Xilinx Zynq-7010 SoC). It fuses FPGA-accelerated image
+  processing, ARM-based embedded control, adaptive computer vision, and
+  AI-driven visual understanding into a single cohesive desktop application.
+  The platform operates in both simulation mode (no hardware required) and
+  hardware mode (connected to a real ZYBO board over TCP/UDP).
+keywords:
+  - computer-vision
+  - edge-computing
+  - fpga
+  - zynq
+  - opencv
+  - pyside6
+  - ai-inference
+  - real-time-processing
+  - embedded-systems
+  - machine-learning
+license: "MIT"
+repository-code: "https://github.com/VetrivelRavichandiran/VISIONFORGE-X"
+url: "https://github.com/VetrivelRavichandiran/VISIONFORGE-X"
+type: software
